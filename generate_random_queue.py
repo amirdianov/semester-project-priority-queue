@@ -1,14 +1,18 @@
+'''
+generation dataset
+'''
 # Здесь будет производиться генерация наборов данных и их запись в файл .txt
 import random
 from priority_queue import PriorityQueue, QueueNode
 
-count = 1
-path = fr'\{count}'
+COUNT = 1
+path = fr'\{COUNT}'
 
 
-def random_queue():
+def random_queue() -> PriorityQueue:
+    '''создание рандомной очереди'''
     testing_queue = PriorityQueue()
-    global count
+    global COUNT
     for i in range(10000):
         perem = (random.randint(-10000, 10000), random.randint(-10000, 10000))
         testing_queue.add(perem[0], perem[1])
@@ -17,5 +21,5 @@ def random_queue():
         for node in testing_queue.queue:
             priority, value = node.priority, node.value
             file.write(f'{priority}: {value}')
-    count += 1
+    COUNT += 1
     return testing_queue
