@@ -1,75 +1,85 @@
-from typing import Any
+'''
+PriorityQueue
+'''
 
 
 class QueueNode:
+    '''QueueNode class'''
+
     def __init__(self, priority: int, value: int):
         self.priority = priority
         self.value = value
 
+    def something(self):
+        '''something more'''
+
     def __repr__(self):
-        return f'{self.priority}-{self.value}'
+        return f'{self.priority}: {self.value};\n'
 
 
 class PriorityQueue:
-    def __init__(self):
-        self.queue: list[QueueNode] = []
+    '''PriorityQueue class'''
 
-    def sift_up(self, index: int) -> None:
-        while index != 0 and self.queue[index].priority >= self.queue[index // 2].priority:
-            self.queue[index], self.queue[index // 2] = self.queue[index // 2], self.queue[index]
-            index //= 2
+    def __init__(self):
+        self.queue: list = []
 
     def add(self, priority: int, value: int) -> None:
-        self.queue.append(QueueNode(priority, value))
-        self.sift_up(len(self.queue) - 1)
+        '''метод добавления узла в очередь (ключ - приоритет)'''
+        node = QueueNode(priority, value)
+        self.queue.append(node)
+        self.sift_up(len(self) - 1)
 
-    def sift_down(self, index: int) -> None:
-        left_index = index * 2 + 1
-        right_index = index * 2 + 2
-        biggest_index = index
-        if left_index < len(self.queue) and self.queue[left_index].priority > self.queue[biggest_index].priority:
-            biggest_index = left_index
-        if right_index < len(self.queue) and self.queue[right_index].priority > self.queue[biggest_index].priority:
-            biggest_index = right_index
-        if index != biggest_index:
-            self.queue[index], self.queue[biggest_index] = self.queue[biggest_index], self.queue[index]
-            self.sift_down(biggest_index)
-        else:
-            self.queue = self.queue[:-1]
+    def sift_up(self, index: int) -> None:
+        '''передаем индекс элемента, который нам нужно поднять вверх'''
+        parent_ind = (index - 1) // 2
+        while index != 0 and self.queue[index].priority >= self.queue[parent_ind].priority:
+            self.queue[index], self.queue[parent_ind] = self.queue[parent_ind], self.queue[index]
+            index = parent_ind
+            parent_ind = (index - 1) // 2
 
     def extract(self) -> int:
+        '''удаление корня и его возвращение'''
         root = self.queue[0]
-        self.queue[0] = self.queue[len(self.queue) - 1]
+        if len(self) == 1:
+            return self.queue.pop()
+        self.queue[0] = self.queue.pop()
         self.sift_down(0)
         return root.value
 
-    def remove(self, priority: int) -> None:
-        index = 0
-        while self.queue[index].priority != priority:
-            index += 1
-        if index >= len(self.queue):
-            raise KeyError
-        self.queue[index].priority = 10000000
-        self.sift_up(index)
-        self.extract()
+    def sift_down(self, index: int) -> None:
+        '''опускает вниз элемент'''
+        while 2 * index + 1 < len(self):
+            maxim_node = self.queue[2 * index + 1]
+            maxim_index = 2 * index + 1
+            if 2 * index + 2 < len(self) and \
+                    maxim_node.priority < self.queue[2 * index + 2].priority:
+                maxim_node = self.queue[2 * index + 2]
+                maxim_index = 2 * index + 2
+            if maxim_node.priority <= self.queue[index].priority:
+                return
+            self.queue[maxim_index], self.queue[index] = \
+                self.queue[index], self.queue[maxim_index]
+            index = maxim_index
 
     def __len__(self) -> int:
         '''метод, который возвращает длину списка'''
         return len(self.queue)
 
-    def __str__(self):
-        return f'{self.queue}'
+    def __repr__(self):
+        '''метод вывода списка'''
+        ans = ''
+        for i in self.queue:
+            ans += i.__repr__()
+        return ans
 
 
-if __name__ == "__main__":
-    pq = PriorityQueue()
-    pq.add(1, 5)
-    pq.add(5, 1)
-    pq.add(2, 3)
-    pq.add(7, 3)
-    pq.add(4, 3)
-    print(pq)
-    pq.remove(7)
-    print(pq)
-    pq.remove(4)
-    print(pq)
+if __name__ == '__main__':
+    queue = PriorityQueue()
+    x = PriorityQueue()
+    x.add(15, 5)
+    x.add(12, 7)
+    x.add(11, 3)
+    x.add(10, 1)
+    x.add(8, 3)
+    x.add(7, 3)
+    print(x)
