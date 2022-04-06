@@ -16,7 +16,7 @@ def random_queue(count, name_method, tests_count: int) -> PriorityQueue:
         perem = (random.randint(-10000, 10000), random.randint(-10000, 10000))
         testing_queue.add(perem[0], perem[1])
 
-    with open(path, 'a', encoding='utf-8') as file:
+    with open(path, 'w', encoding='utf-8') as file:
         for node in testing_queue.queue:
             priority, value = node.priority, node.value
             file.write(f'{priority}: {value}\n')
