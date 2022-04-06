@@ -5,13 +5,14 @@ generation dataset
 import random
 from priority_queue import PriorityQueue
 
+PATH: str = r'/Users/bulat/PycharmProjects/semester-project-priority-queue/dataset_local/'
 
-def random_queue(count) -> PriorityQueue:
+def random_queue(count, name_method, tests_count: int) -> PriorityQueue:
     '''создание рандомной очереди'''
-    path = fr'C:\Users\amird\PycharmProjects\
-    semester-project-priority-queue\dataset_local\{count}.txt'
+    path = PATH + fr'{name_method}/' \
+           fr'{count}.txt'
     testing_queue = PriorityQueue()
-    for _ in range(10):
+    for _ in range(tests_count):
         perem = (random.randint(-10000, 10000), random.randint(-10000, 10000))
         testing_queue.add(perem[0], perem[1])
 
