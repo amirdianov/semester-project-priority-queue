@@ -1,57 +1,85 @@
-from typing import Any
+'''
+PriorityQueue
+'''
 
 
 class QueueNode:
+    '''QueueNode class'''
+
     def __init__(self, priority: int, value: int):
         self.priority = priority
         self.value = value
 
+    def something(self):
+        '''something more'''
+
     def __repr__(self):
-        return f'({self.priority},{self.value})'
+        return f'{self.priority}: {self.value};\n'
 
 
 class PriorityQueue:
+    '''PriorityQueue class'''
+
     def __init__(self):
-        self.list: list[QueueNode] = []
+        self.queue: list = []
 
     def add(self, priority: int, value: int) -> None:
-        self.list.append(QueueNode(priority, value))
+        '''метод добавления узла в очередь (ключ - приоритет)'''
+        node = QueueNode(priority, value)
+        self.queue.append(node)
         self.sift_up(len(self) - 1)
 
-    def sift_up(self, idx: int) -> None:
-        """sifts up element of Heap and put it into correct place"""
-        while idx > 0 and self.list[idx].priority > self.list[(idx - 1) // 2].priority:
-            self.list[idx], self.list[(idx - 1) // 2] = self.list[(idx - 1) // 2], self.list[idx]
-            idx = (idx - 1) // 2
+    def sift_up(self, index: int) -> None:
+        '''передаем индекс элемента, который нам нужно поднять вверх'''
+        parent_ind = (index - 1) // 2
+        while index != 0 and self.queue[index].priority >= self.queue[parent_ind].priority:
+            self.queue[index], self.queue[parent_ind] = self.queue[parent_ind], self.queue[index]
+            index = parent_ind
+            parent_ind = (index - 1) // 2
 
     def extract(self) -> int:
-        """deletes root from Heap and returns it"""
+        '''удаление корня и его возвращение'''
+        root = self.queue[0]
         if len(self) == 1:
-            return self.list.pop().value
-        head: QueueNode = self.list[0]
-        self.list[0] = self.list.pop()
+            return self.queue.pop()
+        self.queue[0] = self.queue.pop()
         self.sift_down(0)
-        return head.value
+        return root.value
 
-    def sift_down(self, idx: int) -> None:
-        """sifts down element of Heap and put it into correct place"""
-        while 2 * idx + 1 < len(self.list):
-            max_priority: int = self.list[2 * idx + 1].priority
-            max_idx: int = 2 * idx + 1
-            if 2 * idx + 2 < len(self.list) and self.list[2 * idx + 2].priority > max_priority:
-                max_priority = self.list[2 * idx + 2].priority
-                max_idx: int = 2 * idx + 2
-            if max_priority <= self.list[idx].priority:
-                break
-            self.list[idx], self.list[max_idx] = self.list[max_idx], self.list[idx]
-            idx = max_idx
-        # опускает вниз элемент
+    def sift_down(self, index: int) -> None:
+        '''опускает вниз элемент'''
+        while 2 * index + 1 < len(self):
+            maxim_node = self.queue[2 * index + 1]
+            maxim_index = 2 * index + 1
+            if 2 * index + 2 < len(self) and \
+                    maxim_node.priority < self.queue[2 * index + 2].priority:
+                maxim_node = self.queue[2 * index + 2]
+                maxim_index = 2 * index + 2
+            if maxim_node.priority <= self.queue[index].priority:
+                return
+            self.queue[maxim_index], self.queue[index] = \
+                self.queue[index], self.queue[maxim_index]
+            index = maxim_index
 
     def __len__(self) -> int:
         '''метод, который возвращает длину списка'''
-        return len(self.list)
+        return len(self.queue)
 
-    def __repr__(self) -> str:
-        return repr(self.list)
+    def __repr__(self):
+        '''метод вывода списка'''
+        ans = ''
+        for i in self.queue:
+            ans += i.__repr__()
+        return ans
 
 
+if __name__ == '__main__':
+    queue = PriorityQueue()
+    x = PriorityQueue()
+    x.add(15, 5)
+    x.add(12, 7)
+    x.add(11, 3)
+    x.add(10, 1)
+    x.add(8, 3)
+    x.add(7, 3)
+    print(x)
