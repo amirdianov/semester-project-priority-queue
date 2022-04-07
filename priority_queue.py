@@ -72,14 +72,11 @@ class PriorityQueue:
             ans += i.__repr__()
         return ans
 
+    def get_root(self):
+        return self.queue[0]
 
-if __name__ == '__main__':
-    queue = PriorityQueue()
-    x = PriorityQueue()
-    x.add(15, 5)
-    x.add(12, 7)
-    x.add(11, 3)
-    x.add(10, 1)
-    x.add(8, 3)
-    x.add(7, 3)
-    print(x)
+    def search(self, priority):
+        for node in self.queue:
+            if node.priority == priority:
+                return node.value
+        raise KeyError
