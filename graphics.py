@@ -1,7 +1,6 @@
 import math
 
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 # from benchmark import time_x, time_add_y, time_extract_y
