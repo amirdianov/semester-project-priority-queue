@@ -1,6 +1,9 @@
 '''
 PriorityQueue
 '''
+from time import time
+
+import graphics
 
 
 class QueueNode:
@@ -80,3 +83,30 @@ class PriorityQueue:
             if node.priority == priority:
                 return node.value
         raise KeyError
+
+
+# queue = PriorityQueue()
+# x = PriorityQueue()
+# x.add(1, 1)
+# x.add(2, 2)
+# x.add(3, 3)
+# x.add(4, 4)
+# x.add(5, 5)
+# mas = []
+# start = time()
+# x.extract()
+# mas.append(time() - start)
+# start = time()
+# x.extract()
+# mas.append(time() - start)
+# start = time()
+# x.extract()
+# mas.append(time() - start)
+# start = time()
+# x.extract()
+# mas.append(time() - start)
+# start = time()
+# x.extract()
+# mas.append(time() - start)
+#
+# graphics.paint_grafics(mas, [5, 4, 3, 2, 1])

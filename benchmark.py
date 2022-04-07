@@ -38,25 +38,22 @@ def check_extract(test_queue: PriorityQueue):
 
 time_x = []
 time_add_y = []
-for i in range(500, 10000, 100):
+for i in range(500, 10000, 500):
     data_v = i
-    test_add_queue: PriorityQueue = start_testing(i, 'add', data_v)
+    test_add_queue: PriorityQueue = start_testing(data_v, 'add', data_v)
     ans = (data_v, check_add(test_add_queue))
     print(ans)
-    time_x.append(ans[0])
+    time_x.append(data_v)
     time_add_y.append(ans[1])
 
 print('-' * 10)
 
 time_extract_y = []
-for i in range(500, 10000, 100):
+for i in range(500, 10000, 500):
     data_v = i
-    test_extract_queue: PriorityQueue = start_testing(i, 'extract', data_v)
+    test_extract_queue: PriorityQueue = start_testing(data_v, 'extract', data_v)
     ans = (data_v, check_extract(test_extract_queue))
     print(ans)
     time_extract_y.append(ans[1])
 
-# print(time_x, len(time_x))
-# print(time_add_y, len(time_add_y))
-# print(time_extract_y, len(time_extract_y))
 graphics.paint_grafics(time_x, time_add_y, time_extract_y)
