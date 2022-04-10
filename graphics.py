@@ -15,7 +15,7 @@ def paint_grafics(time_x, time_add_y, time_extract_y):
 
     plt.plot(time_x, time_add_y, color='b')
     plt.plot(time_x, time_extract_y, color='g')
-    plt.plot(time_x, func(time_x), color='r')
+    # plt.plot(time_x, func(time_x), color='r')
     plt.title('Время работы алгоритма')
     plt.ylabel('Время')
     plt.xlabel('Количество поданных данных')
