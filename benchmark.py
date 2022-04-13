@@ -7,6 +7,8 @@ from generate_random_queue import random_queue
 from time import time
 import graphics
 
+ATTEMPTS: int = 100
+
 
 def time_it(function: Callable) -> Callable:
     def wrap_and_time(*args):
@@ -19,8 +21,8 @@ def time_it(function: Callable) -> Callable:
     return wrap_and_time
 
 
-def start_testing(idx: int, name_method: str, tests_count: int):
-    new_queue = random_queue(idx, name_method, tests_count)
+def start_testing(queue_length: int, name_method: str, attempt: int):
+    new_queue = random_queue(queue_length, name_method, attempt)
     return new_queue
 
 
@@ -47,9 +49,9 @@ time_x = []
 time_add_y_average = []
 for i in range(500, 10001, 500):
     ans = []
-    for attempt in range(10):
+    for attempt in range(ATTEMPTS):
         data_v = i
-        test_add_queue: PriorityQueue = start_testing(data_v, 'add', data_v)
+        test_add_queue: PriorityQueue = start_testing(data_v, 'add', attempt)
         time_work = check_add(test_add_queue)
         ans.append(time_work)
         res['add_time'].append(time_work)
@@ -66,9 +68,9 @@ print('-' * 10)
 time_extract_y_average = []
 for i in range(500, 10001, 500):
     ans = []
-    for attempt in range(10):
+    for attempt in range(ATTEMPTS):
         data_v = i
-        test_extract_queue: PriorityQueue = start_testing(data_v, 'extract', data_v)
+        test_extract_queue: PriorityQueue = start_testing(data_v, 'extract', attempt)
         time_work = check_add(test_extract_queue)
         ans.append(time_work)
         res['extract_time'].append(time_work)
