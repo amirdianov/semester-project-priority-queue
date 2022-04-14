@@ -7,7 +7,7 @@ from generate_random_queue import random_queue
 from time import time
 import graphics
 
-ATTEMPTS: int = 100
+ATTEMPTS: int = 10000
 
 def time_it(function: Callable) -> Callable:
     def wrap_and_time(*args):
@@ -38,6 +38,17 @@ def check_extract(test_queue: PriorityQueue):
         test_queue.extract()
 
 
+@time_it
+def find_max_elem(queue: PriorityQueue):
+    max_elem = None
+    for i in range(len(queue)):
+        max_elem = queue.queue[0].value
+        for elem in queue.queue:
+            if elem.value > max_elem:
+                max_elem = elem.value
+    return max_elem
+
+
 res = {'size_data': [],
        'add_time': [],
        'extract_time': []}
@@ -61,11 +72,9 @@ for i in range(500, 10001, 500):
     average_ans = sum(ans) / len(ans)
     aver['add_average'].append(average_ans)
     time_add_y_average.append(average_ans)
-
 print('-' * 10)
 
 time_extract_y_average = []
-time_linear_algorithm_average = []
 for i in range(500, 10001, 500):
     ans = []
     for attempt in range(ATTEMPTS):
