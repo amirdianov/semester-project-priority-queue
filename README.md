@@ -1,6 +1,5 @@
 # Priority_Queue 
 Something about project
-# Priority_Queue 
 <b>Установка зависимостей:</b>\
 pandas 1.3.3\
 numpy 1.21.2\
