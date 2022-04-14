@@ -1,21 +1,24 @@
+'''
+generation dataset
+'''
 # Здесь будет производиться генерация наборов данных и их запись в файл .txt
 import random
-from priority_queue import PriorityQueue, QueueNode
+from priority_queue import PriorityQueue
 
-count = 1
-path = fr'\{count}'
+PATH: str = 'C:/Users/amird/PycharmProjects/semester-project-priority-queue/dataset_local/'
 
 
-def random_queue():
+def random_queue(queue_length: int, name_method: str, attempt: int) -> PriorityQueue:
+    '''создание рандомной очереди'''
+    path = PATH + fr'{name_method}/' \
+                  fr'{queue_length}_{attempt}.txt'
     testing_queue = PriorityQueue()
-    global count
-    for i in range(10000):
-        perem = (random.randint(-10000, 10000), random.randint(-10000, 10000))
-        testing_queue.add(perem[0], perem[1])
+    for _ in range(queue_length):
+        random_priority, random_value = random.randint(-10000, 10000), random.randint(-10000, 10000)
+        testing_queue.add(random_priority, random_value)
 
-    with open(path, 'a', encoding='utf-8') as file:
+    with open(path, 'w', encoding='utf-8') as file:
         for node in testing_queue.queue:
             priority, value = node.priority, node.value
-            file.write(f'{priority}: {value}')
-    count += 1
+            file.write(f'{priority}: {value}\n')
     return testing_queue
